@@ -10,18 +10,31 @@ d1=$(($a+$b*$c))
 echo $d1
 d2=$(($a*$b+$c))
 echo $d2
-d3=$(awk "BEGIN {print ($c+$a/$b)}")
+d3=$(($c+$a/$b))
 echo $d3
-d4=$(awk "BEGIN {print ($a%$b+$c)}")
+d4=$(($a%$b+$c))
 echo $d4
-dict=([a+b*c]=$d1 [a*b+c]=$d2 [c+a/b]=$d3 [a%b+c]=$d4)
+dict[a+b*c]=$(($a+$b*$c))
+dict[a*b+c]=$(($a*$b+$c))
+dict[c+a/b]=$(($c+$a/$b))
+dict[a%b+c]=$(($a%$b+$c))
 i=0
 for key in ${!dict[@]}
 do 
-	echo dict[$key]=${dict[$key]}
-	array[++i]=${dict[$key]}
+	echo $key=${dict[$key]}
+	array[i++]=${dict[$key]}
 done
-for i in ${!array[@]}
+echo ${array[@]}
+for ((i=1; i<4; i++))
 do
-	echo "result[$i]= ${array[$i]}"
+   for ((j=0; j<i; j++))
+   do
+     if [ ${array[$i]} -lt ${array[$j]} ]
+     then
+         temp=${array[$j]}
+         array[$j]=${array[$i]}
+         array[$i]=$temp
+     fi
+   done
 done
+echo -e "ascending order \n${array[@]}"
