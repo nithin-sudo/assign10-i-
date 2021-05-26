@@ -8,5 +8,7 @@ echo "user inputs are:$a $b $c"
 #echo $d1
 #d2=$(($a*$b+$c))
 #echo $d2
-d3=$(($c+$a/$b))
+d3=$(awk "BEGIN {print ($c+$a/$b)}")
 echo $d3
+d4=$(awk "BEGIN {print ($a%$b+$c)}")
+echo $d4
