@@ -4,7 +4,7 @@ read -p "enter a:" a
 read -p "enter b:" b
 read -p "enter c:" c
 echo "user inputs are a:$a b:$b c:$c"
-
+declare -a array
 declare -A dict
 d1=$(($a+$b*$c))
 echo $d1
@@ -15,7 +15,13 @@ echo $d3
 d4=$(awk "BEGIN {print ($a%$b+$c)}")
 echo $d4
 dict=([a+b*c]=$d1 [a*b+c]=$d2 [c+a/b]=$d3 [a%b+c]=$d4)
+i=0
 for key in ${!dict[@]}
 do 
 	echo dict[$key]=${dict[$key]}
+	array[++i]=${dict[$key]}
+done
+for i in ${!array[@]}
+do
+	echo "result[$i]= ${array[$i]}"
 done
